@@ -3,7 +3,7 @@ public class MovingUp implements ElevatorState {
 
 	@Override
 	public void movingUp(Elevator e) {
-		
+		System.out.println("Cannot change state from moving up to moving up");
 	}
 
 	@Override
