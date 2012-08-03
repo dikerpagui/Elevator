@@ -1,22 +1,18 @@
 
-public class Floor {
+public class Floor extends Part implements Observer{
 
 		int id;
-		Door door;
 		FloorPanel fp;
 		Elevator elevator;
+		int elevatorPosition;
 		
 		public Floor(int id,Elevator elevator)
 		{
 			this.id=id;
-			this.door=new Door();
+			this.door=new FloorDoor();
 			this.elevator=elevator;
 			this.fp=new FloorPanel(this, this.elevator);
-		}
-		
-		public Door getDoor()
-		{
-			return this.door;
+			this.elevatorPosition=0;
 		}
 		
 		public Elevator getElevator()
@@ -33,4 +29,10 @@ public class Floor {
 		{
 			return this.id;
 		}
+		
+		public void setElevatorPosition(int pos)
+		{
+			this.elevatorPosition=pos;
+		}
+		
 }

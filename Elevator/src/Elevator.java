@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 
-public class Elevator {
-
-		Door door;
+public class Elevator extends Part implements Publisher{
+	
 		ElevatorPanel ep;
 		int curPos;
 		ArrayList<Floor> floors=new ArrayList<Floor>();
@@ -13,10 +12,11 @@ public class Elevator {
 		{
 			this.curPos=0;
 			ep=new ElevatorPanel(this,numFloors);
-			door=new Door();
-			
+			door=new ElevatorDoor(this);
+			elavatorState=new Idle();
 		}
-		public void setFloors(ArrayList<Floor> floors)
+		@Override
+		public void attachFloors(ArrayList<Floor> floors)
 		{
 			this.floors=floors;
 		}
@@ -37,27 +37,25 @@ public class Elevator {
 				moveDown();
 			
 		}
-		public void moveUp()
+		protected void moveUp()
 		{
+			this.getElevatorPanel().getLED().changeDirection(Direction.UP);
+			this.movingUp(); //Elevator is in moving Up State.
 			for(int i=this.curPos; i >= this.getRequests().get(0).getNo(); i--)
 			{
 				this.curPos=i;
-				this.getElevatorPanel().getLED().changeDirection(Direction.UP);
 				System.out.println("Cur Pos: "+ this.curPos);
 			}
 		}
-		public void moveDown()
+		protected void moveDown()
 		{
+			this.getElevatorPanel().getLED().changeDirection(Direction.DOWN);
+			this.movingDown(); //Elevator is in moving Down State.
 			for(int i=this.curPos; i <= this.getRequests().get(0).getNo(); i++)
 			{
 				this.curPos=i;
-				this.getElevatorPanel().getLED().changeDirection(Direction.DOWN);
 				System.out.println("Cur Pos: "+ this.curPos);
 			}
-		}
-		public Door getDoor()
-		{
-			return this.door;
 		}
 		public int getCurPos()
 		{
@@ -81,6 +79,9 @@ public class Elevator {
 				this.removeRequest();
 				
 				this.getElevatorPanel().getLED().changeDirection(Direction.STATIONARY);
+				
+				this.idle(); //Elevator Idle State.
+				
 				processDoorFunctioning();			
 			}
 		}
@@ -116,9 +117,8 @@ public class Elevator {
 		{
 			//Opening and Closing Elevator and floor doors..
 			this.getDoor().openDoor();
-			floors.get(this.getCurPos()).getDoor().openDoor();
+			
 			this.getDoor().closeDoor();
-			floors.get(this.getCurPos()).getDoor().closeDoor();
 		}
 		
 		public void changeState(ElevatorState eState) {
@@ -126,6 +126,27 @@ public class Elevator {
 		
 		}
 		
-	}
+		public void movingUp()
+		{
+			this.elavatorState.movingUp(this);
+		}
+		public void movingDown()
+		{
+			this.elavatorState.movingDown(this);
+		}
+		public void idle()
+		{
+			this.elavatorState.idle(this);
+		}
+		
+		@Override
+		public void notifyFloors() {
+			
+			for(int i=0; i<this.floors.size();i++)
+			{
+				this.floors.get(i).setElevatorPosition(this.getCurPos());
+			}
+		}
+}
 
 

@@ -1,7 +1,6 @@
 
-public class FloorPanel {
-	
-	LED led;
+public class FloorPanel extends Panel {
+
 	FPButton up;
 	FPButton down;
 	Floor floor;
@@ -29,11 +28,6 @@ public class FloorPanel {
 	public FPButton getDownButton()
 	{
 		return this.down;
-	}
-	
-	public LED getLED()
-	{
-		return led;
 	}
 	
 	public Floor getFloor()

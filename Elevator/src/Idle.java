@@ -3,20 +3,17 @@ public class Idle implements ElevatorState {
 
 	@Override
 	public void movingUp(Elevator e) {
-		// TODO Auto-generated method stub
-
+		e.changeState(new MovingUp());
 	}
 
 	@Override
 	public void movingDown(Elevator e) {
-		// TODO Auto-generated method stub
-
+		e.changeState(new MovingDown());
 	}
 
 	@Override
 	public void idle(Elevator e) {
-		// TODO Auto-generated method stub
-
+		System.out.println("Cannot change state from idle to idle");
 	}
 
 }

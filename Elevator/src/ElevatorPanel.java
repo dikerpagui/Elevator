@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 
-public class ElevatorPanel {
+public class ElevatorPanel extends Panel{
 	
-	LED led;
 	ArrayList<EPButton> buttonsToFloors=new ArrayList<EPButton>();
 	Elevator elevator;
 	
@@ -13,11 +12,6 @@ public class ElevatorPanel {
 		for(int i=0; i<numFloors; i++)
 			buttonsToFloors.add(new EPButton(i,this));
 		
-	}
-	
-	public LED getLED()
-	{
-		return this.led;
 	}
 	
 	public ArrayList<EPButton> getButtonsToFloors()

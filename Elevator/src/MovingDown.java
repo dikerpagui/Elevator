@@ -3,20 +3,17 @@ public class MovingDown implements ElevatorState {
 
 	@Override
 	public void movingUp(Elevator e) {
-		// TODO Auto-generated method stub
-
+		System.out.println("Cannot change state from moving down to moving up");
 	}
 
 	@Override
 	public void movingDown(Elevator e) {
-		// TODO Auto-generated method stub
-
+		System.out.println("Cannot change state from moving down to moving down");
 	}
 
 	@Override
 	public void idle(Elevator e) {
-		// TODO Auto-generated method stub
-
+		e.changeState(new Idle());
 	}
 
 }
